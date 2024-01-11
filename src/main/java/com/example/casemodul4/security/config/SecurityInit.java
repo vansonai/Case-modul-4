@@ -1,4 +1,7 @@
 package com.example.casemodul4.security.config;
 
-public class SecurityInit {
+
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+
+public class SecurityInit  extends AbstractSecurityWebApplicationInitializer {
 }
