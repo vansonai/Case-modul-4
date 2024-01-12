@@ -40,6 +40,5 @@ public class CustomerController {
         modelAndView.addObject("customers", customer);
         modelAndView.addObject("message", "Customer updated successfully");
         return modelAndView;
-
     }
 }
