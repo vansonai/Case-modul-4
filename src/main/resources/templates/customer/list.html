@@ -9,15 +9,15 @@
 <h1>Customers</h1>
 <table border="1">
     <tr>
-        <th>First name</th>
-        <th>Last name</th>
+        <th>Name</th>
+        <th>Age</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
     <th:block th:each="customer : ${customers}">
         <tr>
-            <td th:text="${customer.firstName}"></td>
-            <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.getName()}"></td>
+            <td th:text="${customer.age}"></td>
             <td><a th:href="@{/customers/update/__${customer.id}__ }">Update</a></td>
             <td><a th:href="@{/customers/delete/__${customer.id}__ }">Delete</a></td>
         </tr>

@@ -1,4 +1,6 @@
 package com.example.casemodul4.service;
 
-public interface ICustomerService {
+import com.example.casemodul4.model.Customer;
+
+public interface ICustomerService extends IGenerateService<Customer> {
 }
