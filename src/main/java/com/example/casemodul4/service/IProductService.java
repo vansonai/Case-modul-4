@@ -8,5 +8,5 @@ public interface IProductService{
     Page<Product> findAll(Pageable pageable);
     Product findById(Long id);
     void save(Product product);
-    void delete(Long id);
+    void deleteById(Long id);
 }

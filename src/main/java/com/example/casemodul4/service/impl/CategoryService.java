@@ -8,13 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryService implements ICategoryService {
     @Autowired
     private ICategoryRepository iCategoryRepository;
 
     @Override
-    public Iterable<Category> findAll() {
+    public List<Category> findAll() {
         return iCategoryRepository.findAll();
     }
     @Override
@@ -33,7 +35,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         iCategoryRepository.deleteById(id);
     }
 }

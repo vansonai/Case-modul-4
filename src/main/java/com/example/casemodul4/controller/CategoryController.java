@@ -24,7 +24,7 @@ public class CategoryController {
     }
     @GetMapping("/create")
     public ModelAndView create(){
-        return new ModelAndView("/category/form","product", new Category());
+        return new ModelAndView("/category/form","category", new Category());
     }
     @PostMapping
     public String save(@RequestBody Category category){
@@ -32,8 +32,8 @@ public class CategoryController {
         return "redirect:/categories";
     }
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id){
-        iCategoryService.delete(id);
+    public String deleteById(@PathVariable Long id){
+        iCategoryService.deleteById(id);
         return "redirect:/categories";
     }
 }

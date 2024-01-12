@@ -7,7 +7,7 @@
 <body>
 <div class="container">
     <h1>Product form</h1>
-    <form method="post" th:object="${product}">
+    <form th:action="@{/products}" method="post" th:object="${product}">
         <label><input type="text" th:field="*{id}" hidden></label>
         <div>
             <label for="name" class="form-label">Name</label>
@@ -29,7 +29,7 @@
             <label for="category" class="form-label">Category</label>
             <select class="form-select" id="category" th:field="*{category}">
                 <option value="">--Select a Category--</option>
-                <option th:each="c: ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>

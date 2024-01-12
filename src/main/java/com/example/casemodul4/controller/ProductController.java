@@ -33,8 +33,8 @@ public class ProductController {
         return "redirect:/products";
     }
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id){
-        iProductService.delete(id);
+    public String deleteById(@PathVariable Long id){
+        iProductService.deleteById(id);
         return "redirect:/products";
     }
 }
