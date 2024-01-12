@@ -8,8 +8,11 @@
 
 <h1>Update customer</h1>
 <p>
-    <a href="/customers">Customer list</a>
+    <a href="/customers/list">Customer list</a>
 </p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
 <form th:action="@{/customers/update}" th:object="${customers}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>

@@ -5,9 +5,7 @@ import com.example.casemodul4.service.CustomerService;
 import com.example.casemodul4.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -24,7 +22,7 @@ public class CustomerController {
         return modelAndView;
     }
     @GetMapping("/update/{id}")
-    public ModelAndView updateCustomer(@PathVariable Long id){
+    public ModelAndView formUpdateCustomer(@PathVariable Long id){
         Optional<Customer> customer = customerService.findById(id);
 
         if (customer.isPresent()){
@@ -34,5 +32,14 @@ public class CustomerController {
         }else {
             return new ModelAndView("/error_404");
         }
+    }
+    @PostMapping("/update")
+    public ModelAndView updateCustomer(@ModelAttribute("customer") Customer customer){
+        customerService.save(customer);
+        ModelAndView modelAndView = new ModelAndView("customer/update");
+        modelAndView.addObject("customers", customer);
+        modelAndView.addObject("message", "Customer updated successfully");
+        return modelAndView;
+
     }
 }
