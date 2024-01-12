@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/customers")
+//@RequestMapping("/customers")
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
-    @GetMapping("/create")
+    @GetMapping("/customers/create")
     public ModelAndView formCreateCustomer(){
         ModelAndView modelAndView = new ModelAndView("/customer/form");
+        return modelAndView;
+    }
+    @GetMapping("/home")
+    public ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView("/home");
         return modelAndView;
     }
 
