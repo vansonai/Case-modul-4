@@ -1,5 +1,4 @@
 package com.example.casemodul4.security;
-
 import com.example.casemodul4.model.Role;
 import com.example.casemodul4.model.Users;
 import org.springframework.security.core.GrantedAuthority;
