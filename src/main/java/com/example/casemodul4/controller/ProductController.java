@@ -24,7 +24,7 @@ public class ProductController {
     }
     @GetMapping("/create")
     public ModelAndView create(){
-        return new ModelAndView("/prpoduct/form", "product", new Product());
+        return new ModelAndView("/product/form", "product", new Product());
     }
     @PostMapping
     public String save(@ModelAttribute Product product){
