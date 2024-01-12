@@ -10,12 +10,30 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     private IProductService iProductService;
     @GetMapping
     public ModelAndView findAll(@PageableDefault Pageable pageable){
         return new ModelAndView("/product/list", "products", iProductService.findAll(pageable));
+    }
+    @GetMapping("/{id}")
+    public ModelAndView findById(@PathVariable Long id){
+        return new ModelAndView("/product/form", "product", iProductService.findById(id));
+    }
+    @GetMapping("/create")
+    public ModelAndView create(){
+        return new ModelAndView("/product/form", "product", new Product());
+    }
+    @PostMapping
+    public String save(@ModelAttribute Product product){
+        iProductService.save(product);
+        return "redirect:/products";
+    }
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        iProductService.delete(id);
+        return "redirect:/products";
     }
 }
