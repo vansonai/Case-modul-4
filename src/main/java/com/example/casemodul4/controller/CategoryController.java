@@ -1,12 +1,15 @@
 package com.example.casemodul4.controller;
 
 import com.example.casemodul4.model.Category;
+import com.example.casemodul4.model.Product;
 import com.example.casemodul4.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -14,26 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class CategoryController {
     @Autowired
     private ICategoryService iCategoryService;
-    @GetMapping
-    public ModelAndView findAll(@PageableDefault Pageable pageable){
-        return new ModelAndView("/category/list", "categories", iCategoryService.findAll(pageable));
+    @GetMapping("")
+    public String listCategory(Model model){
+        Iterable<Category> categories = iCategoryService.findAll();
+        model.addAttribute("categories", categories);
+        return "/category/list";
     }
-    @GetMapping("/{id}")
-    public ModelAndView findById(@PathVariable Long id){
-        return new ModelAndView("/category/form", "category", iCategoryService.findById(id));
+    @GetMapping("create")
+    public ModelAndView showCreateForm(){
+        ModelAndView modelAndView = new ModelAndView("/category/create");
+        modelAndView.addObject("category", new Category());
+        return modelAndView;
     }
-    @GetMapping("/create")
-    public ModelAndView create(){
-        return new ModelAndView("/category/form","category", new Category());
-    }
-    @PostMapping
-    public String save(@RequestBody Category category){
+    @PostMapping("create")
+    public ModelAndView saveCategory(@ModelAttribute("category") Category category){
         iCategoryService.save(category);
-        return "redirect:/categories";
-    }
-    @GetMapping("/delete/{id}")
-    public String deleteById(@PathVariable Long id){
-        iCategoryService.deleteById(id);
-        return "redirect:/categories";
+        ModelAndView modelAndView = new ModelAndView("/category/create");
+        modelAndView.addObject("category", new Category());
+        return modelAndView;
     }
 }
