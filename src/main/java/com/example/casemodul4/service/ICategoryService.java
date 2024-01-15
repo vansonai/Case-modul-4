@@ -4,9 +4,5 @@ import com.example.casemodul4.model.Category;
 
 import java.util.Optional;
 
-public interface ICategoryService {
-    Iterable<Category> findAll();
-    Optional<Category> findById(Long id);
-    void save(Category category);
-    void remove(Long id);
+public interface ICategoryService extends IGenerateService<Category>{
 }

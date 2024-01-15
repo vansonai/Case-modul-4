@@ -1,7 +1,6 @@
 package com.example.casemodul4.controller;
 
 import com.example.casemodul4.model.Customer;
-import com.example.casemodul4.service.CustomerService;
 import com.example.casemodul4.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

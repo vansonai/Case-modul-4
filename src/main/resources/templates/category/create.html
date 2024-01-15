@@ -30,7 +30,7 @@
         <form class="allForm" th:action="@{/categories/create}" th:object="${category}" method="post">
             <div class="form-group">
                 <label>Name</label>
-                <input style="width: 300px;" type="text" class="form-control"  th:field="*{name}"  placeholder="Name" name="name">
+                <input style="width: 300px;" type="text" class="form-control"  th:field="*{name}"  placeholder="Name" name="name" required>
             </div>
             <button type="submit" class="btn btn-primary" >Submit</button>
             <a type="button" th:action="@{/categories}"  class="btn btn-primary">Back</a>

@@ -66,22 +66,22 @@
     <form class="allForm" th:action="@{/products/create}" th:object="${product}" method="post">
         <div class="form-group">
             <label>Name</label>
-            <input style="width: 300px;" type="text" class="form-control"  th:field="*{name}"  >
+            <input style="width: 300px;" type="text" class="form-control"  th:field="*{name}" required >
         </div>
         <div class="form-group">
-            <label>price</label>
-            <input style="width: 300px;" type="text" class="form-control"  th:field="*{price}" >
+            <label>Price</label>
+            <input style="width: 300px;" type="text" class="form-control"  th:field="*{price}" required>
         </div>
         <div class="form-group">
-            <label>description</label>
-            <input style="width: 300px;" type="text" class="form-control"  th:field="*{description}" >
+            <label>Description</label>
+            <input style="width: 300px;" type="text" class="form-control"  th:field="*{description}" required>
         </div>
         <div class="form-group">
-            <label>quantity</label>
-            <input style="width: 300px;" type="text" class="form-control"  th:field="*{quantity}" >
+            <label>Quantity</label>
+            <input style="width: 300px;" type="text" class="form-control"  th:field="*{quantity}" required>
         </div>
         <div class="form-group">
-            <label>category</label>
+            <label>Category</label>
             <select style="width: 300px; margin-bottom: 20px;" class="form-select" id="category" th:field="*{category}">
                 <option value="">--Select a Category--</option>
                 <option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}"></option>

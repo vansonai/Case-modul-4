@@ -30,7 +30,10 @@
     <a class="nav-link" href="/categories">Category</a>
   </li>
 </ul>
-
+<form th:action="@{/products/search}" method="post">
+    <input type="text" name="name" required>
+    <button type="submit">Search</button>
+</form>
 <table class="table table-bordered">
     <thead>
     <tr>
