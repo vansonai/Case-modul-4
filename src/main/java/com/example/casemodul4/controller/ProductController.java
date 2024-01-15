@@ -61,19 +61,8 @@ public class ProductController {
         return modelAndView;
     }
     @GetMapping("delete/{id}")
-    public ModelAndView showDeleteForm(@PathVariable Long id){
-        Optional<Product> product = iProductService.findById(id);
-        if(product.isPresent()){
-            ModelAndView modelAndView = new ModelAndView("/product/delete");
-            modelAndView.addObject("product", product.get());
-            return modelAndView;
-        } else {
-            return new ModelAndView("/error_404");
-        }
-    }
-    @PostMapping("delete")
-    public String deleteProduct(@ModelAttribute("product") Product product){
-        iProductService.remove(product.getId());
+    public String delete(@PathVariable Long id){
+        iProductService.remove(id);
         return "redirect:/products";
     }
 }
