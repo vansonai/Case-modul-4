@@ -1,15 +1,11 @@
 package com.example.casemodul4.controller;
 
 import com.example.casemodul4.model.Category;
-import com.example.casemodul4.model.Product;
 import com.example.casemodul4.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -35,5 +31,10 @@ public class CategoryController {
         ModelAndView modelAndView = new ModelAndView("/category/create");
         modelAndView.addObject("category", new Category());
         return modelAndView;
+    }
+    @GetMapping("delete/{id}")
+    public String deleteCategory(@PathVariable Long id){
+        iCategoryService.remove(id);
+        return "redirect:/categories";
     }
 }
