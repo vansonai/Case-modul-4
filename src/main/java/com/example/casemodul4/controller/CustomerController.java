@@ -24,7 +24,6 @@ public class CustomerController {
     @GetMapping("/update/{id}")
     public ModelAndView formUpdateCustomer(@PathVariable Long id){
         Optional<Customer> customer = customerService.findById(id);
-
         if (customer.isPresent()){
             ModelAndView modelAndView = new ModelAndView("/customer/update");
             modelAndView.addObject("customers", customer.get());
