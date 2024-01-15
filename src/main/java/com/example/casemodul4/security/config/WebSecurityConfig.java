@@ -52,15 +52,14 @@ public class WebSecurityConfig {
 //        return http.build();
         http
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers(HttpMethod.GET, "/", "/home", "/login").permitAll()
-                                .requestMatchers("/home").permitAll()
+                        authorize.requestMatchers("/", "/home", "/login-register","/register","/img/**","css/**").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/customers/**").hasAuthority("ROLE_CUSTOMER")
 
                 ).formLogin(
                         form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
+                                .loginPage("/login-register")
+                                .loginProcessingUrl("/login-register")
                                 .successHandler(successHandler())
                                 .permitAll()
                 ).logout(
@@ -92,7 +91,7 @@ public class WebSecurityConfig {
             if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
                 response.sendRedirect("/admin");
             } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))) {
-                response.sendRedirect("/customer/home");
+                response.sendRedirect("/customers");
             }
         };
     }
