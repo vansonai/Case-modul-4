@@ -7,7 +7,8 @@
 <body>
 <h1>Update Product</h1>
 <a href="/products">Product List</a>
-<form th:action="@{/products/edit}" th:object="${product}" method="post">
+<form th:action="@{/products/update}" th:object="${product}" method="post">
+    <input type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
             <td>Name: </td>

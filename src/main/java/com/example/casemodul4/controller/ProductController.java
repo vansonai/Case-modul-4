@@ -46,7 +46,7 @@ public class ProductController {
     public ModelAndView showEditForm(@PathVariable Long id){
         Optional<Product> productOptional = iProductService.findById(id);
         if(productOptional.isPresent()){
-            ModelAndView modelAndView = new ModelAndView("/product/edit");
+            ModelAndView modelAndView = new ModelAndView("/product/update");
             modelAndView.addObject("product", productOptional.get());
             return modelAndView;
         } else {
@@ -56,7 +56,7 @@ public class ProductController {
     @PostMapping("edit")
     public ModelAndView editProduct(@ModelAttribute("product") Product product){
         iProductService.save(product);
-        ModelAndView modelAndView = new ModelAndView("/product/edit");
+        ModelAndView modelAndView = new ModelAndView("/product/update");
         modelAndView.addObject("product", product);
         return modelAndView;
     }
@@ -64,5 +64,11 @@ public class ProductController {
     public String delete(@PathVariable Long id){
         iProductService.remove(id);
         return "redirect:/products";
+    }
+    @PostMapping("search")
+    public ModelAndView findName(@RequestParam String name){
+        ModelAndView modelAndView = new ModelAndView("/product/list");
+        modelAndView.addObject("products", iProductService.findProductByNameContaining(name));
+        return modelAndView;
     }
 }

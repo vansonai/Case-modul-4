@@ -8,6 +8,10 @@
 <h1>Product List</h1>
 <a href="/products/create">Create new Product</a>
 <a href="/categories">Category</a>
+<form th:action="@{/products/search}" method="post">
+  <input type="text" name="name" required>
+  <button type="submit">Search</button>
+</form>
 <table border="1">
   <tr>
     <th>Name</th>

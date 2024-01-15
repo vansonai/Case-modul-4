@@ -9,7 +9,7 @@
     <h1>List categories</h1>
     <a class="btn btn-primary" th:href="@{/categories/create}">Create new Category</a>
     <a class="btn btn-primary" th:href="@{/products}">Products</a>
-    <table class="table">
+    <table class="table" border="1">
         <thead>
         <tr>
             <th>STT</th>
@@ -21,7 +21,6 @@
         <tr th:each="c,cs : ${categories}">
             <td th:text="${cs.count}"></td>
             <td th:text="${c.name}"></td>
-            <td><a class="btn btn-warning" th:href="@{/categories/__${c.id}__}">Update</a></td>
             <td><a class="btn btn-warning" th:href="@{/categories/delete/__${c.id}__}">Delete</a></td>
         </tr>
         </tbody>
