@@ -42,8 +42,8 @@ public class ProductController {
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
-    @GetMapping("edit/{id}")
-    public ModelAndView showEditForm(@PathVariable Long id){
+    @GetMapping("update/{id}")
+    public ModelAndView showUpdateForm(@PathVariable Long id){
         Optional<Product> productOptional = iProductService.findById(id);
         if(productOptional.isPresent()){
             ModelAndView modelAndView = new ModelAndView("/product/update");
@@ -53,8 +53,8 @@ public class ProductController {
             return new ModelAndView("/error_404");
         }
     }
-    @PostMapping("edit")
-    public ModelAndView editProduct(@ModelAttribute("product") Product product){
+    @PostMapping("update")
+    public ModelAndView updateProduct(@ModelAttribute("product") Product product){
         iProductService.save(product);
         ModelAndView modelAndView = new ModelAndView("/product/update");
         modelAndView.addObject("product", product);

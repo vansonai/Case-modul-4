@@ -44,7 +44,8 @@
         <tr th:each="c,cs : ${categories}">
             <td th:text="${cs.count}"></td>
             <td th:text="${c.name}"></td>
-            <td><a class="btn btn-info" th:href="@{/categories/__${c.id}__}">Update</a></td>
+            <td><a class="btn btn-info" th:href="@{/categories/update/__${c.id}__}">Update</a></td>
+            <td><a class="btn btn-info" th:href="@{/categories/delete/__${c.id}__}">Delete</a></td>
         </tr>
         </tbody>
     </table>
