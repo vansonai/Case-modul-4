@@ -21,4 +21,7 @@ public class Customer {
     private String phone;
     private Integer age;
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User idUser;
 }

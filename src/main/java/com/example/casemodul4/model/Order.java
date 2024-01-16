@@ -17,8 +17,23 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Timestamp orderDate;
+
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer idCustomer;
+    @JoinColumn(name = "user_id")
+    private User User;
+
+    @Column(name = "phone_number",nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "delivery_address", nullable = false)
+    private String deliveryAddress;
+
+    @Column(name = "status", columnDefinition = "VARCHAR(255) DEFAULT 'started'", nullable = false)
+    private String status;
+
+    @Column(name = "total_price", nullable = false)
+    private Float totalPrice;
+
 }
