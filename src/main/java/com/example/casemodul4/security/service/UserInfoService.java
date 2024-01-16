@@ -31,21 +31,26 @@ public class UserInfoService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         return UserPrinciple.build(userRepository.findByUsername(username));
     }
-    public void saveUser(UserPrinciple userPrinciple){
-        Users users = new Users();
-        String encodedPassword = passwordEncoder.encode(userPrinciple.getPassword());
-        users.setUsername(userPrinciple.getUsername());
-        users.setPassword(encodedPassword);
-        Role role = roleRepository.findByName("ROLE_CUSTOMER");
-        users.setRoles(Arrays.asList(role));
-        userRepository.save(users);
-    }
-    public void updateUser(UserPrinciple userPrinciple,Long id){
-        Users users = userRepository.findById(id).orElse(null);
-        String encodedPassword = passwordEncoder.encode(userPrinciple.getPassword());
-        users.setUsername(userPrinciple.getUsername());
-        users.setPassword(encodedPassword);
-        userRepository.save(users);
+//    public void saveUser(UserPrinciple userPrinciple){
+//        Users users = new Users();
+//        String encodedPassword = passwordEncoder.encode(userPrinciple.getPassword());
+//        users.setUsername(userPrinciple.getUsername());
+//        users.setPassword(encodedPassword);
+//        Role role = roleRepository.findByName("ROLE_CUSTOMER");
+//        users.setRoles(Arrays.asList(role));
+//        userRepository.save(users);
+//    }
+//    public void updateUser(UserPrinciple userPrinciple,Long id){
+//        Users users = userRepository.findById(id).orElse(null);
+//        String encodedPassword = passwordEncoder.encode(userPrinciple.getPassword());
+//        users.setUsername(userPrinciple.getUsername());
+//        users.setPassword(encodedPassword);
+//        userRepository.save(users);
+//    }
+
+    public boolean isUsernameUnique(String username){
+        Users existingUsers = userRepository.findByUsername(username);
+        return existingUsers == null;
     }
 
 }

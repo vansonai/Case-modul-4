@@ -12,4 +12,8 @@ public class AdminController {
     public String adminHome() {
         return "/home";
     }
+    @GetMapping("/home")
+    public String testHome() {
+        return "/home";
+    }
 }

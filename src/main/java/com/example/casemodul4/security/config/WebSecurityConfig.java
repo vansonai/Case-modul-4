@@ -53,14 +53,15 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/", "/home", "/login-register","/register","/img/**","css/**").permitAll()
-                                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/customers/**").hasAuthority("ROLE_CUSTOMER")
+                                .requestMatchers("admin/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("customers/**").hasAuthority("ROLE_CUSTOMER")
 
                 ).formLogin(
                         form -> form
                                 .loginPage("/login-register")
                                 .loginProcessingUrl("/login-register")
-                                .successHandler(successHandler())
+//                                .successHandler(successHandler())
+                                .defaultSuccessUrl("/home")
                                 .permitAll()
                 ).logout(
                         logout -> logout
