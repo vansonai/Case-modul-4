@@ -1,5 +1,6 @@
 package com.example.casemodul4.controller;
 
+import com.example.casemodul4.model.Cart;
 import com.example.casemodul4.model.Category;
 import com.example.casemodul4.model.Product;
 import com.example.casemodul4.service.ICategoryService;
@@ -13,12 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("cart")
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
     private IProductService iProductService;
     @Autowired
     private ICategoryService iCategoryService;
+    @ModelAttribute("cart")
+    public Cart setUpCart(){
+        return new Cart();
+    }
     @ModelAttribute("categories")
     public Iterable<Category> categories(){
         return iCategoryService.findAll();
@@ -63,6 +69,23 @@ public class ProductController {
     @GetMapping("delete/{id}")
     public String delete(@PathVariable Long id){
         iProductService.remove(id);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/addToCart/{id}")
+    public String addToCart(@PathVariable Long id,
+                            @ModelAttribute Cart cart,
+                            @RequestParam("action") String action) {
+        Optional<Product> productOptional = iProductService.findById(id);
+
+        if(!productOptional.isPresent()) {
+            return "/error_404";
+        }
+        if (action.equals("show")) {
+            cart.addProduct(productOptional.get());
+            return "redirect:/shopping-cart";
+        }
+        cart.addProduct(productOptional.get());
         return "redirect:/products";
     }
 }
