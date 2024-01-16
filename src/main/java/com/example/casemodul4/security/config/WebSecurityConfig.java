@@ -38,17 +38,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/", "/home", "/login-register","/register","/img/**","css/**").permitAll()
+                        authorize.requestMatchers("/", "/home", "/login","/register","/img/*","css/*","js/*").permitAll()
                                 .requestMatchers("admin/**","products/create","products",
                                         "products/update","products/update/{id}","customers/list",
                                         "categories/**").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("customers//update/{id}","customers/update",
-                                        "shopping-cart/**").hasAuthority("ROLE_CUSTOMER")
+                                .requestMatchers("customers/update/{id}","customers/update","shopping-cart/**").hasAuthority("ROLE_CUSTOMER")
 
                 ).formLogin(
                         form -> form
-                                .loginPage("/login-register")
-                                .loginProcessingUrl("/login-register")
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
 //                                .successHandler(successHandler())
                                 .defaultSuccessUrl("/home")
                                 .permitAll()
