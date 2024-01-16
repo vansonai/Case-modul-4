@@ -9,26 +9,28 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CustomerServiceImpl implements ICustomerService {
+public class CustomerService implements ICustomerService {
     @Autowired
-    private ICustomerRepository customerRepository;
+    private ICustomerRepository iCustomerRepository;
+
 
     @Override
     public Iterable<Customer> findAll() {
-        return null;
+        return iCustomerRepository.findAll();
     }
 
     @Override
     public Optional<Customer> findById(Long id) {
-        return Optional.empty();
+        return iCustomerRepository.findById(id);
     }
 
+    @Override
     public void save(Customer customer) {
-        customerRepository.save(customer);
+        iCustomerRepository.save(customer);
     }
 
     @Override
     public void remove(Long id) {
-
+        iCustomerRepository.deleteById(id);
     }
 }

@@ -18,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginAndRegisterController {
     @Autowired
     private IUserRepository userRepository;
-//    @Autowired
-//    private UserInfoService userInfoService;
     @Autowired
     private IUserService userService;
     @GetMapping("/login-register")
@@ -30,7 +28,7 @@ public class LoginAndRegisterController {
     }
     @GetMapping("/home")
     public String showHome(){
-        return "/home";
+        return "/product/list";
     }
 //    @GetMapping("/register")
 //    public ModelAndView formRegister(){
