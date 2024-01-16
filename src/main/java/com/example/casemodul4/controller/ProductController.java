@@ -38,7 +38,7 @@ public class ProductController {
     @PostMapping("create")
     public ModelAndView saveProduct(@ModelAttribute ("product") Product product){
         iProductService.save(product);
-        ModelAndView modelAndView = new ModelAndView("/product/create");
+        ModelAndView modelAndView = new ModelAndView("redirect:/products");
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
@@ -56,7 +56,7 @@ public class ProductController {
     @PostMapping("update")
     public ModelAndView updateProduct(@ModelAttribute("product") Product product){
         iProductService.save(product);
-        ModelAndView modelAndView = new ModelAndView("/product/update");
+        ModelAndView modelAndView = new ModelAndView("redirect:/products");
         modelAndView.addObject("product", product);
         return modelAndView;
     }
