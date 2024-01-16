@@ -27,26 +27,26 @@
 <div class="container">
     <h1>Update Product</h1>
     <a href="/products">Product List</a>
-    <form class="allForm" th:action="@{/products/create}" th:object="${product}" method="post">
+    <form class="allForm" th:action="@{/products/update}" th:object="${product}" method="post">
         <input th:type="hidden" name="id" th:field="*{id}">
         <div class="form-group">
             <label>Name</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{name}"  >
         </div>
         <div class="form-group">
-            <label>price</label>
+            <label>Price</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{price}" >
         </div>
         <div class="form-group">
-            <label>description</label>
+            <label>Description</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{description}" >
         </div>
         <div class="form-group">
-            <label>quantity</label>
+            <label>Quantity</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{quantity}" >
         </div>
         <div class="form-group">
-            <label>category</label>
+            <label>Category</label>
             <select style="width: 300px; margin-bottom: 20px;" class="form-select" id="category" th:field="*{category}">
                 <option value="">--Select a Category--</option>
                 <option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}"></option>

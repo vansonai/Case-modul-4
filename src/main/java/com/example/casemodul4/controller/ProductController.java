@@ -44,25 +44,25 @@ public class ProductController {
     @PostMapping("create")
     public ModelAndView saveProduct(@ModelAttribute ("product") Product product){
         iProductService.save(product);
-        ModelAndView modelAndView = new ModelAndView("/product/create");
+        ModelAndView modelAndView = new ModelAndView("redirect:/products");
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
-    @GetMapping("edit/{id}")
-    public ModelAndView showEditForm(@PathVariable Long id){
+    @GetMapping("update/{id}")
+    public ModelAndView showUpdateForm(@PathVariable Long id){
         Optional<Product> productOptional = iProductService.findById(id);
         if(productOptional.isPresent()){
-            ModelAndView modelAndView = new ModelAndView("/product/edit");
+            ModelAndView modelAndView = new ModelAndView("/product/update");
             modelAndView.addObject("product", productOptional.get());
             return modelAndView;
         } else {
             return new ModelAndView("/error_404");
         }
     }
-    @PostMapping("edit")
-    public ModelAndView editProduct(@ModelAttribute("product") Product product){
+    @PostMapping("update")
+    public ModelAndView updateProduct(@ModelAttribute("product") Product product){
         iProductService.save(product);
-        ModelAndView modelAndView = new ModelAndView("/product/edit");
+        ModelAndView modelAndView = new ModelAndView("redirect:/products");
         modelAndView.addObject("product", product);
         return modelAndView;
     }
@@ -86,6 +86,28 @@ public class ProductController {
             return "redirect:/shopping-cart";
         }
         cart.addProduct(productOptional.get());
+        return "redirect:/products";
+    }
+    @PostMapping("search")
+    public ModelAndView findName(@RequestParam String name){
+        ModelAndView modelAndView = new ModelAndView("/product/list");
+        modelAndView.addObject("products", iProductService.findProductByNameContaining(name));
+        return modelAndView;
+    }
+
+    @GetMapping("/sub/{id}")
+    public String subFromCart(@PathVariable Long id,
+                              @ModelAttribute Cart cart,
+                              @RequestParam("action") String action) {
+        Optional<Product> productOptional = iProductService.findById(id);
+        if(!productOptional.isPresent()) {
+            return "/error_404";
+        }
+        if (action.equals("show")) {
+            cart.subProduct(productOptional.get());
+            return "redirect:/shopping-cart";
+        }
+        cart.subProduct(productOptional.get());
         return "redirect:/products";
     }
 }
