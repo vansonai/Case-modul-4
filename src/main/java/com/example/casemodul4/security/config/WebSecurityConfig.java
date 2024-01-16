@@ -36,25 +36,14 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/home","/").permitAll()
-////                        .requestMatchers("/customers/**").hasRole("CUSTOMER")
-//                )
-//                .formLogin((form) -> form
-//                        .loginPage("/login")
-//                        .loginProcessingUrl("/login")
-//                        .defaultSuccessUrl("/home")
-//                        .permitAll()
-//                )
-//                .logout((logout) -> logout.permitAll());
-//
-//        return http.build();
         http
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/", "/home", "/login-register","/register","/img/**","css/**").permitAll()
-                                .requestMatchers("admin/**").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("customers/**").hasAuthority("ROLE_CUSTOMER")
+                                .requestMatchers("admin/**","products/create","products",
+                                        "products/update","products/update/{id}","customers/list",
+                                        "categories/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("customers//update/{id}","customers/update",
+                                        "shopping-cart/**").hasAuthority("ROLE_CUSTOMER")
 
                 ).formLogin(
                         form -> form

@@ -1,18 +1,13 @@
 package com.example.casemodul4.security.service;
-import com.example.casemodul4.model.Role;
-import com.example.casemodul4.model.Users;
+import com.example.casemodul4.model.User;
 import com.example.casemodul4.repository.IRoleRepository;
 import com.example.casemodul4.repository.IUserRepository;
 import com.example.casemodul4.security.UserPrinciple;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class UserInfoService implements UserDetailsService {
@@ -49,7 +44,7 @@ public class UserInfoService implements UserDetailsService {
 //    }
 
     public boolean isUsernameUnique(String username){
-        Users existingUsers = userRepository.findByUsername(username);
+        User existingUsers = userRepository.findByUsername(username);
         return existingUsers == null;
     }
 

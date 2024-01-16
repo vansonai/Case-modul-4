@@ -1,6 +1,6 @@
 package com.example.casemodul4.security;
 import com.example.casemodul4.model.Role;
-import com.example.casemodul4.model.Users;
+import com.example.casemodul4.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,7 @@ public class UserPrinciple implements UserDetails {
         this.roles = roles;
     }
 
-    public static UserPrinciple build(Users user) {
+    public static UserPrinciple build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));

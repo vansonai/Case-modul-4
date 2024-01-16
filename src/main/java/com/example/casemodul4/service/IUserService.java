@@ -1,14 +1,14 @@
 package com.example.casemodul4.service;
 
 import com.example.casemodul4.dto.UserDto;
-import com.example.casemodul4.model.Users;
+import com.example.casemodul4.model.User;
 
 import java.util.List;
 
-public interface IUserService extends IGenerateService<Users> {
+public interface IUserService extends IGenerateService<User> {
     void saveUser(UserDto userDto);
 
-    Users findUserByUsername(String username);
+    User findUserByUsername(String username);
 
     List<UserDto> findAllUsers();
 }
