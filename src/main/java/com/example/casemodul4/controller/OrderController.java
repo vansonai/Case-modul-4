@@ -1,7 +1,10 @@
 package com.example.casemodul4.controller;
 
-import com.example.casemodul4.model.Cart;
+import com.example.casemodul4.model.*;
+import com.example.casemodul4.service.IOrderDetailService;
+import com.example.casemodul4.service.IOrderService;
 import com.example.casemodul4.service.IProductService;
+import com.example.casemodul4.service.IUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,14 +32,14 @@ public class OrderController {
     @Autowired
     private IProductService iProductService;
 
-//    @Autowired
-//    private IOrderService iorderService;
+    @Autowired
+    private IOrderService iorderService;
 //
-//    @Autowired
-//    private IOrderDetailService iOrderDetailService;
-//
-//    @Autowired
-//    private IUserService iUserService;
+    @Autowired
+    private IOrderDetailService iOrderDetailService;
+
+    @Autowired
+    private IUserService iUserService;
 
     @GetMapping("")
     public String showOrder(HttpSession session, RedirectAttributes redirectAttributes) {
@@ -55,49 +58,50 @@ public class OrderController {
         modelAndView.addObject("cart", cart);
         return modelAndView;
     }
+
+    @GetMapping("/place-order")
+    public ModelAndView payment(@ModelAttribute("cart") Cart cart) {
 //
-//    @GetMapping("/place-order")
-//    public ModelAndView payment(@ModelAttribute("cart") Cart cart) {
-//
-//        //giả sử một user mặc định. User sẽ lấy qua userid từ session
-//        Optional<User> user = iUserService.findById(Long.valueOf(1));
-//
-//        if (user.isPresent()) {
-//
-//            //Tạo đơn hàng cho user
-//            Order order = new Order();
-//
-//            order.setUser(user.get());
-//            order.setPhoneNumber("0968949246");
-//            order.setDeliveryAddress("Ha Noi");
-//            order.setOrderDate(new Timestamp(System.currentTimeMillis()));
-//            order.setStatus("Started");
-//            order.setTotalPrice(cart.countTotalPayment());
-//
-//            iorderService.save(order);
-//
-//            // Lấy danh sách products từ cart, cho vào orderdetail
-//            Map<Product, Integer> products = cart.getProducts();
-//            for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-//                Product product = entry.getKey();
-//                Long quantity = Long.valueOf(entry.getValue());
-//
-//                OrderDetail orderDetail = new OrderDetail();
-//                orderDetail.setOrder(order);
-//                orderDetail.setProduct(product);
-//                orderDetail.setQuantity(quantity);
-//                orderDetail.setPrice(product.getPrice() * quantity);
-//                iOrderDetailService.save(orderDetail);
-//
-//                // trừ đi số lượng sản phẩm
-//                product.setQuantity(product.getQuantity() - quantity);
-//                iProductService.save(product);
-//            }
-//            //xóa giỏ hàng
-//            cart.deleteAllFromCart();
-//            ModelAndView modelAndView = new ModelAndView("/order/success");
-//            return modelAndView;
-//        }
-//        return new ModelAndView("/error_404");
-//    }
+        //giả sử một user mặc định. User sẽ lấy qua userid từ session
+        Optional<User> user = iUserService.findById(Long.valueOf(1));
+
+        if (user.isPresent()) {
+
+            //Tạo đơn hàng cho user
+            //Tạo đơn hàng cho customer
+            Order order = new Order();
+
+            order.setUser(user.get());
+            order.setPhoneNumber("0968949246");
+            order.setDeliveryAddress("Ha Noi");
+            order.setOrderDate(new Timestamp(System.currentTimeMillis()));
+            order.setStatus("Started");
+            order.setTotalPrice(cart.countTotalPayment());
+
+            iorderService.save(order);
+
+            // Lấy danh sách products từ cart, cho vào orderdetail
+            Map<Product, Integer> products = cart.getProducts();
+            for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+                Product product = entry.getKey();
+                Long quantity = Long.valueOf(entry.getValue());
+
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrder(order);
+                orderDetail.setProduct(product);
+                orderDetail.setQuantity(quantity);
+                orderDetail.setPrice(product.getPrice() * quantity);
+                iOrderDetailService.save(orderDetail);
+
+                // trừ đi số lượng sản phẩm
+                product.setQuantity(product.getQuantity() - quantity);
+                iProductService.save(product);
+            }
+            //xóa giỏ hàng
+            cart.deleteAllFromCart();
+            ModelAndView modelAndView = new ModelAndView("/order/success");
+            return modelAndView;
+        }
+        return new ModelAndView("/error_404");
+    }
 }
