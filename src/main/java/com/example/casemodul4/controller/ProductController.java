@@ -1,5 +1,6 @@
 package com.example.casemodul4.controller;
 
+import com.example.casemodul4.model.Cart;
 import com.example.casemodul4.model.Category;
 import com.example.casemodul4.model.Product;
 import com.example.casemodul4.service.ICategoryService;
@@ -13,12 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("cart")
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
     private IProductService iProductService;
     @Autowired
     private ICategoryService iCategoryService;
+    @ModelAttribute("cart")
+    public Cart setUpCart(){
+        return new Cart();
+    }
     @ModelAttribute("categories")
     public Iterable<Category> categories(){
         return iCategoryService.findAll();
@@ -30,10 +36,10 @@ public class ProductController {
         return "/product/list";
     }
     @GetMapping("create")
-    public ModelAndView showCreateForm(){
-        ModelAndView modelAndView = new ModelAndView("/product/create");
-        modelAndView.addObject("product", new Product());
-        return modelAndView;
+    public String showCreateForm(Model model){
+        Product product = new Product();
+        model.addAttribute("product", product);
+        return "/product/create";
     }
     @PostMapping("create")
     public ModelAndView saveProduct(@ModelAttribute ("product") Product product){
@@ -65,10 +71,43 @@ public class ProductController {
         iProductService.remove(id);
         return "redirect:/products";
     }
+
+    @GetMapping("/addToCart/{id}")
+    public String addToCart(@PathVariable Long id,
+                            @ModelAttribute Cart cart,
+                            @RequestParam("action") String action) {
+        Optional<Product> productOptional = iProductService.findById(id);
+
+        if(!productOptional.isPresent()) {
+            return "/error_404";
+        }
+        if (action.equals("show")) {
+            cart.addProduct(productOptional.get());
+            return "redirect:/shopping-cart";
+        }
+        cart.addProduct(productOptional.get());
+        return "redirect:/products";
+    }
     @PostMapping("search")
     public ModelAndView findName(@RequestParam String name){
         ModelAndView modelAndView = new ModelAndView("/product/list");
         modelAndView.addObject("products", iProductService.findProductByNameContaining(name));
         return modelAndView;
+    }
+
+    @GetMapping("/sub/{id}")
+    public String subFromCart(@PathVariable Long id,
+                              @ModelAttribute Cart cart,
+                              @RequestParam("action") String action) {
+        Optional<Product> productOptional = iProductService.findById(id);
+        if(!productOptional.isPresent()) {
+            return "/error_404";
+        }
+        if (action.equals("show")) {
+            cart.subProduct(productOptional.get());
+            return "redirect:/shopping-cart";
+        }
+        cart.subProduct(productOptional.get());
+        return "redirect:/products";
     }
 }

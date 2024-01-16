@@ -31,7 +31,7 @@ public class CategoryController {
     @PostMapping("create")
     public ModelAndView saveCategory(@ModelAttribute("category") Category category){
         iCategoryService.save(category);
-        ModelAndView modelAndView = new ModelAndView("/category/create");
+        ModelAndView modelAndView = new ModelAndView("redirect:/categories");
         modelAndView.addObject("category", new Category());
         return modelAndView;
     }
@@ -54,7 +54,7 @@ public class CategoryController {
     @PostMapping("update")
     public ModelAndView updateCategory(@ModelAttribute("category") Category category){
         iCategoryService.save(category);
-        ModelAndView modelAndView = new ModelAndView("/category/update");
+        ModelAndView modelAndView = new ModelAndView("redirect:/categories");
         modelAndView.addObject("category", category);
         return modelAndView;
     }

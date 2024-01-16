@@ -24,8 +24,6 @@ public class Product {
     private String description;
     @Min(0)
     private Long quantity;
-    @Transient
-    private MultipartFile file;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

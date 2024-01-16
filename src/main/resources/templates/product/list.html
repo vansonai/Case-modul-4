@@ -24,11 +24,14 @@
 <h1>Product List</h1>
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link active" href="/products/create">Create</a>
+    <a class="nav-link active" th:if="${user.role} == 'ADMIN'" href="/products/create">Create</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/categories">Category</a>
+    <a class="nav-link" th:if="${user.role} == 'ADMIN'" href="/categories">Category</a>
   </li>
+    <li class="nav-item">
+        <a class="nav-link" th:if="${user.role} == 'CUSTOMER'" href="/shopping-cart">Show Cart</a>
+    </li>
 </ul>
 <form th:action="@{/products/search}" method="post">
     <input type="text" name="name" required>
@@ -57,13 +60,13 @@
         <td th:text="${product.quantity}"></td>
         <td th:text="${product.category.name}"></td>
         <td>
-          <a class="btn btn-info" th:href="@{/products/update/__${product.id}__}">Update</a>
+          <a class="btn btn-info" th:if="${user.role} == 'ADMIN'" th:href="@{/products/update/__${product.id}__}">Update</a>
         </td>
         <td>
-          <a class="btn btn-info" th:href="@{/products/delete/__${product.id}__}">Delete</a>
+          <a class="btn btn-info" th:if="${user.role} == 'ADMIN'" th:href="@{/products/delete/__${product.id}__}">Delete</a>
         </td>
         <td>
-          <a class="btn btn-info" th:href="@{/carts/__${product.id}__}">Add to cart</a>
+          <a class="btn btn-info" th:if="${user.role} == 'CUSTOMER'" th:href="@{/products/addToCart/__${product.id}__(action='list')}">Add to cart</a>
         </td>
       </tr>
     </th:block>
