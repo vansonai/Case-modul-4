@@ -35,6 +35,11 @@ public class LoginAndRegisterController {
         model.addAttribute("products", products);
         return "/index";
     }
+    @GetMapping("/search")
+    public String searchByName(Model model, @RequestParam String name){
+        model.addAttribute("products",iProductService.findProductByNameContaining(name));
+        return "/index";
+    }
 //    @GetMapping("/register")
 //    public ModelAndView formRegister(){
 //        ModelAndView modelAndView = new ModelAndView("/signup");
