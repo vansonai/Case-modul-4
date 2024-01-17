@@ -64,7 +64,9 @@ public class ProductController {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }else {
+        }else if(product.getId() == null){
+            product.setImage("no-image.png");
+        }else{
             product.setImage(iProductService.findById(product.getId()).get().getImage());
         }
         iProductService.save(product);
@@ -90,16 +92,17 @@ public class ProductController {
 
         // Kiểm tra và xử lý ảnh mới
 //        MultipartFile file = product.getFile();
-//        if (file != null && !file.isEmpty()) {
+//        if(file != null && file.getSize() != 0){
 //            String fileName = file.getOriginalFilename();
 //            try {
-//                // Lưu ảnh mới vào thư mục upload
 //                FileCopyUtils.copy(file.getBytes(), new File(upload + fileName));
 //                product.setImage(fileName);
 //            } catch (IOException ex) {
 //                ex.printStackTrace();
 //            }
-//        }else {
+//        }else if(product.getId() == null){
+//            product.setImage("no-image.png");
+//        }else{
 //            product.setImage(iProductService.findById(product.getId()).get().getImage());
 //        }
         iProductService.save(product);
