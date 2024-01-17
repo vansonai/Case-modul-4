@@ -90,7 +90,7 @@ public class ProductController {
     }
     @PostMapping("search")
     public ModelAndView findName(@RequestParam String name){
-        ModelAndView modelAndView = new ModelAndView("/product/list");
+        ModelAndView modelAndView = new ModelAndView("/home");
         modelAndView.addObject("products", iProductService.findProductByNameContaining(name));
         return modelAndView;
     }
