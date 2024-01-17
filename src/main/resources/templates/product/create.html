@@ -23,52 +23,15 @@
     </style>
 </head>
 <body>
-<!--<h1>Create new Product</h1>-->
-<!--<a href="/products">Product List</a>-->
-<!--<form th:action="@{/products/create}" th:object="${product}" method="post">-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            <td>Name: </td>-->
-<!--            <td><input type="text" th:field="*{name}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Price: </td>-->
-<!--            <td><input type="text" th:field="*{price}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Description: </td>-->
-<!--            <td><input type="text" th:field="*{description}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Quantity: </td>-->
-<!--            <td><input type="text" th:field="*{quantity}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Category: </td>-->
-<!--            <td>-->
-<!--                <select class="form-select" id="category" th:field="*{category}">-->
-<!--                    <option value="">&#45;&#45;Select a Category&#45;&#45;</option>-->
-<!--                    <option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}"></option>-->
-<!--                </select>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td></td>-->
-<!--            <td><input type="submit" value="Create Product"></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</form>-->
 
 <div class="container">
     <h1>Create new Product</h1>
-    <form class="allForm" th:action="@{/products/create}" th:object="${product}" method="post">
+    <form class="allForm" th:action="@{/products/create}" th:object="${product}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label>Name</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{name}" required >
         </div>
         <div class="form-group">
-            <label>Price</label>
-            <input style="width: 300px;" type="text" class="form-control"  th:field="*{price}" >
             <label>Price</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{price}" required>
         </div>
@@ -78,9 +41,11 @@
         </div>
         <div class="form-group">
             <label>Quantity</label>
-            <input style="width: 300px;" type="text" class="form-control"  th:field="*{quantity}" >
-            <label>Quantity</label>
             <input style="width: 300px;" type="text" class="form-control"  th:field="*{quantity}" required>
+        </div>
+        <div class="form-group">
+            <label>Image</label>
+            <input style="width: 300px;" type="file" id="image" name="image" class="form-control"  th:field="*{file}" accept="image/*" required>
         </div>
         <div class="form-group">
             <label>Category</label>

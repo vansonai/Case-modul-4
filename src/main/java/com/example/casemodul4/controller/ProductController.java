@@ -6,11 +6,16 @@ import com.example.casemodul4.model.Product;
 import com.example.casemodul4.service.ICategoryService;
 import com.example.casemodul4.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +30,8 @@ public class ProductController {
     public Cart setUpCart(){
         return new Cart();
     }
+    @Value("$={file-upload}")
+    private String upload;
     @ModelAttribute("categories")
     public Iterable<Category> categories(){
         return iCategoryService.findAll();
@@ -43,9 +50,24 @@ public class ProductController {
     }
     @PostMapping("create")
     public ModelAndView saveProduct(@ModelAttribute ("product") Product product){
-        iProductService.save(product);
+
         ModelAndView modelAndView = new ModelAndView("redirect:/products");
         modelAndView.addObject("product", new Product());
+
+        //Tai file
+        MultipartFile file = product.getFile();
+        if(file != null && file.getSize() != 0){
+            String fileName = file.getOriginalFilename();
+            try {
+                FileCopyUtils.copy(file.getBytes(), new File(upload + fileName));
+                product.setImage(fileName);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }else {
+            product.setImage(iProductService.findById(product.getId()).get().getImage());
+        }
+        iProductService.save(product);
         return modelAndView;
     }
     @GetMapping("update/{id}")
@@ -54,6 +76,7 @@ public class ProductController {
         if(productOptional.isPresent()){
             ModelAndView modelAndView = new ModelAndView("/product/update");
             modelAndView.addObject("product", productOptional.get());
+
             return modelAndView;
         } else {
             return new ModelAndView("/error_404");
@@ -61,10 +84,27 @@ public class ProductController {
     }
     @PostMapping("update")
     public ModelAndView updateProduct(@ModelAttribute("product") Product product){
-        iProductService.save(product);
+
         ModelAndView modelAndView = new ModelAndView("redirect:/products");
         modelAndView.addObject("product", product);
+
+        // Kiểm tra và xử lý ảnh mới
+//        MultipartFile file = product.getFile();
+//        if (file != null && !file.isEmpty()) {
+//            String fileName = file.getOriginalFilename();
+//            try {
+//                // Lưu ảnh mới vào thư mục upload
+//                FileCopyUtils.copy(file.getBytes(), new File(upload + fileName));
+//                product.setImage(fileName);
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }else {
+//            product.setImage(iProductService.findById(product.getId()).get().getImage());
+//        }
+        iProductService.save(product);
         return modelAndView;
+
     }
     @GetMapping("delete/{id}")
     public String delete(@PathVariable Long id){

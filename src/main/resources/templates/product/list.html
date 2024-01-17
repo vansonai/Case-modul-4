@@ -45,6 +45,7 @@
       <th>Description</th>
       <th>Quantity</th>
       <th>Category</th>
+      <th>Image</th>
       <th>Update</th>
       <th>Delete</th>
       <th>Add to cart</th>
@@ -59,6 +60,8 @@
         <td th:text="${product.description}"></td>
         <td th:text="${product.quantity}"></td>
         <td th:text="${product.category.name}"></td>
+        <td><img th:src="@{'/image/' + ${product.image}}" alt="Image" style="max-width: 100px; max-height: 100px;" /></td>
+<!--        <td><img th:src="@{/image/lovepik-headphones-in-the-red-background-picture_500863710.jpg}" style="max-width: 100px; max-height: 100px;"/></td>-->
         <td>
           <a class="btn btn-info" th:href="@{/products/update/__${product.id}__}">Update</a>
         </td>
