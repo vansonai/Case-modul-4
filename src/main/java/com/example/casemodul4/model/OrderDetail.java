@@ -28,5 +28,7 @@ public class OrderDetail {
     private Double totalPrice;
 
     private Long quantity;
+    @Column(name = "price", nullable = false)
+    private Double price;
 
 }
